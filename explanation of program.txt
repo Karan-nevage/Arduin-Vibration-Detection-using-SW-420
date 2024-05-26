@@ -1,0 +1,64 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+  
+These are the library files included at the beginning of the program. `Wire.h` is a library that provides access to the I2C bus. `Adafruit_GFX.h` and `Adafruit_SSD1306.h` are libraries for the OLED display.
+
+ 
+#define SCREEN_WIDTH 128 // OLED display width
+#define SCREEN_HEIGHT 64 // OLED display height
+  
+These lines define the width and height of the OLED display.
+
+ 
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);
+  
+This line creates an instance of the `Adafruit_SSD1306` class called `display`. This object represents the physical display connected to the Arduino.
+
+ 
+#define VIBRATION_SENSOR_PIN 2
+#define BUZZER_PIN 3
+#define RED_LED_PIN 4
+#define GREEN_LED_PIN 5
+  
+These lines define the pins to which the vibration sensor, buzzer, and LEDs are connected.
+
+ 
+static const unsigned char PROGMEM bell_bmp[] =
+{ 
+  B00011000,
+  B00111100,
+  B00111100,
+  B00111100,
+  B01111110,
+  B11111111,
+  B11111111,
+  B00011000
+};
+  
+This is the bitmap for the bell icon. Each line represents a row of pixels on the display. A `1` represents a lit pixel, and a `0` represents an unlit pixel.
+
+ 
+void setup() {
+  pinMode(VIBRATION_SENSOR_PIN, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(RED_LED_PIN, OUTPUT);
+  pinMode(GREEN_LED_PIN, OUTPUT);
+  ...
+}
+  
+The `setup()` function runs once when the program starts. It sets the mode of the pins and initializes the display.
+
+ 
+void loop() {
+  int sensorValue = digitalRead(VIBRATION_SENSOR_PIN);
+  if(sensorValue == HIGH) {
+    ...
+  } else {
+    ...
+  }
+}
+  
+The `loop()` function runs continuously after `setup()` finishes. It reads the value from the vibration sensor. If the sensor detects vibration (`sensorValue == HIGH`), it turns on the buzzer and the red LED, and displays a message and a bell icon on the OLED display. If no vibration is detected, it turns on the green LED and displays a different message on the OLED display.
+
+
